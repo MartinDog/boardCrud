@@ -5,8 +5,10 @@ import boardcrud.dto.BoardDto;
 import boardcrud.entity.Board;
 import boardcrud.service.BoardService;
 import io.micrometer.common.util.StringUtils;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -63,10 +65,11 @@ public class BoardController {
         }
         return ResponseEntity.status(500).build();
     }
+    @Transactional
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable(name="id")String id){
-        if(StringUtils.isNotEmpty(id)) {
-            boardDao.deleteById(Long.parseLong(id));
+        if(!StringUtils.isEmpty(id)) {
+            boardDao.deleteById(id);
             return ResponseEntity.ok("success");
         }
         return ResponseEntity.badRequest().build();

@@ -12,7 +12,7 @@ public interface BoardDao extends JpaRepository<Board,Long> {
     Optional<Board> findById(Long id);
 
     //게시글 삭제
-    void deleteById(Long id);
+    void deleteById(String id);
 
     //보드 id생성을 위한 갯수 조회 로직
     Long countBy();
